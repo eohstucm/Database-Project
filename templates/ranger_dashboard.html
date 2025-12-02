@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Ranger Dashboard{% endblock %}
+
+{% block content %}
+<h2>Welcome Ranger</h2>
+
+<h3>Update Portage Status</h3>
+<form method="POST" action="{{ url_for('ranger_update_portage') }}">
+    <label>Portage:</label>
+    <select name="portage_id" required>
+        {% for portage in portages %}
+            <option value="{{ portage.portage_id }}">
+                Portage {{ portage.portage_id }}: {{ portage.lake_a }} ↔ {{ portage.lake_b }}
+            </option>
+        {% endfor %}
+    </select><br>
+
+    <label>Status:</label>
+    <select name="status" required>
+        <option value="good">Good</option>
+        <option value="needs repair">Needs Repair</option>
+        <option value="closed">Closed</option>
+    </select><br>
+
+    <button type="submit">Update</button>
+</form>
+
+<hr>
+
+<h3>All Portages</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Lake A</th>
+        <th>Lake B</th>
+        <th>Distance (km)</th>
+        <th>Difficulty</th>
+        <th>Status</th>
+    </tr>
+    {% for portage in portages %}
+    <tr>
+        <td>{{ portage.portage_id }}</td>
+        <td>{{ portage.lake_a }}</td>
+        <td>{{ portage.lake_b }}</td>
+        <td>{{ portage.distance_km }}</td>
+        <td>{{ portage.difficulty }}</td>
+        <td>{{ portage.maintenance_status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

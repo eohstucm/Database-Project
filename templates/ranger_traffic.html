@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Tourist Traffic{% endblock %}
+
+{% block content %}
+<h3>Filter Tourist Traffic</h3>
+<form method="POST" action="{{ url_for('ranger_traffic') }}">
+    <label>Year:</label>
+    <select name="year">
+        <option value="" {% if not selected_year %}selected{% endif %}>Any</option>
+        {% for yr in available_years %}
+            <option value="{{ yr }}" {% if selected_year == yr|string %}selected{% endif %}>{{ yr }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Season:</label>
+    <select name="season">
+        <option value="" {% if not selected_season %}selected{% endif %}>Any</option>
+        <option value="spring" {% if selected_season == 'spring' %}selected{% endif %}>Spring</option>
+        <option value="summer" {% if selected_season == 'summer' %}selected{% endif %}>Summer</option>
+        <option value="fall" {% if selected_season == 'fall' %}selected{% endif %}>Fall</option>
+        <option value="winter" {% if selected_season == 'winter' %}selected{% endif %}>Winter</option>
+    </select>
+
+    <button type="submit">Filter</button>
+</form>
+
+
+<hr>
+
+<h3>Tourist Traffic Summary</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Year</th>
+        <th>Season</th>
+        <th>Lake</th>
+        <th>Total Visitors</th>
+    </tr>
+    {% for row in traffic_summary %}
+    <tr>
+        <td>{{ row.year }}</td>
+        <td>{{ row.season }}</td>
+        <td>{{ row.lake_name }}</td>
+        <td>{{ row.total_visitors }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

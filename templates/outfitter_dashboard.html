@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Outfitter Dashboard{% endblock %}
+
+{% block content %}
+<h2>Welcome Outfitter</h2>
+
+<h3>Issue New Permit</h3>
+<form method="POST" action="{{ url_for('outfitter_new_permit') }}">
+    <label>Access Point:</label>
+    <select name="access_id" required>
+        {% for ap in accesspoints %}
+            <option value="{{ ap.access_id }}">{{ ap.name }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label>Issue Date:</label>
+    <input type="date" name="issue_date" required><br>
+
+    <label>Group Size:</label>
+    <input type="number" name="group_size" required><br>
+
+    <label>Duration (days):</label>
+    <input type="number" name="duration_days" required><br>
+
+    <button type="submit">Issue Permit</button>
+</form>
+
+<h3>Log Tourist Traffic</h3>
+<form method="POST" action="{{ url_for('outfitter_log_traffic') }}">
+    <label>Lake:</label>
+    <select name="lake_id" required>
+        {% for lake in lakes %}
+            <option value="{{ lake.lake_id }}">{{ lake.name }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label>Season:</label>
+    <select name="season" required>
+        <option value="spring">Spring</option>
+        <option value="summer">Summer</option>
+        <option value="fall">Fall</option>
+        <option value="winter">Winter</option>
+    </select><br>
+
+    <label>Year:</label>
+    <input type="number" name="year" min="2000" max="2100" required><br>
+
+    <label>Visitors Count:</label>
+    <input type="number" name="visitors_count" min="1" required><br>
+
+    <button type="submit">Log Entry</button>
+</form>
+{% endblock %}
