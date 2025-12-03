@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+import os
 import mysql.connector
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -8,10 +9,12 @@ app.secret_key = 'passkey!'
 # Database Connection
 def get_db_connection():
     return mysql.connector.connect(
-        host='localhost',
-        user='eohst',
-        password='DataBasepassword1!',
-        database='queticousagedb'
+        host=os.getenv("DB_HOST"),
+        port=int(os.getenv("DB_PORT")),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME"),
+        ssl_disabled=False
     )
 
 # Authentication Routes
